@@ -1,5 +1,13 @@
 {% extends 'todo/base.html' %}
 
 {% block content %}
-  <h1>Index<h1>
+
+<!-- Sign Up Button -->
+<a href="{% url 'signupuser' %}">Sign Up</a>
+
+<br>
+
+<!-- Sign In Button -->
+<a href="{% url 'loginuser' %}">Login</a>
+
 {% endblock %}
