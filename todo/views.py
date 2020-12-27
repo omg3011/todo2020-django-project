@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm      # For Sign-up form
 from django.db import IntegrityError                        # For handling error: username already taken
 from django.contrib.auth.models import User                 # For retrieving signup authentication data which user input
-
+from .forms import CreateUserForm
 
 # Home Page
 def index(request):
@@ -10,7 +10,7 @@ def index(request):
 
 # Signup Page
 def signupuser(request):
-    form = UserCreationForm()
+    form = CreateUserForm()
 
     if request.method == 'POST':
         if form.is_valid():

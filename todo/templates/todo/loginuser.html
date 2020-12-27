@@ -1,7 +1,115 @@
-{% extends 'todo/base.html' %}
+{% extends 'todo/base2.html' %}
 
 {% block content %}
+	<style>
+		.my_card {
+			width: 350px;
+			margin-top: auto;
+			margin-bottom:auto;
+			background: #74cfbf;
+			position: relative;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			padding: 10px;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			border-radius: 5px;
+		}
+		.input-group-text {
+			background: #f7ba5b !important;
+			color: white !important;
+			border: 0 !important;
+			border-radius: 0.25rem 0 0 0.25rem !important;
+		}
+		.form_container {
+			margin-top: 20px;
+		}
+		#form-title{
+			color: #fff;
+		}
 
-Login User
+
+		.login_btn {
+			width: 100%;
+			background: #33ccff !important;
+			color: white !important;
+		}
+		.login_btn:focus {
+			box-shadow: none !important;
+			outline: 0px !important;
+		}
+		.login_container {
+			padding: 0 2rem; /* Make box skinnier */
+		}
+		.sameHeight{
+			line-height: 25px; /* Match Height */
+			font-size: 20px;   /* Match Width */
+		}
+
+	</style>
+
+<div class="jumbotron d-flex align-items-center min-vh-100 mb-5">
+	<div class="container h-100">
+		<div class="d-flex justify-content-center h-100">
+			<div class="my_card">
+
+				<!-- Title: REGISTER ACCOUNT -->
+				<div class="d-flex justify-content-center">
+					<h3 id="form-title">LOGIN ACCOUNT</h3>
+				</div>
+
+				<!-- Form -->
+				<div class="d-flex justify-content-center form_container">
+
+					<form method="POST" action="">
+						<!-- Security -->
+						{% csrf_token %}
+
+						<!-- Segment 1: Input Username -->
+						<div class="input-group mb-2">
+							<!-- LHS -->
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fas fa-user sameHeight"></i></span>
+							</div>
+							<!-- RHS -->
+							<input type="text" name="username" placeholder="Username..." class="form-control">
+						</div>
+
+						<!-- Segment 2: Input Password -->
+						<div class="input-group mb-2">
+							<!-- LHS -->
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fas fa-key sameHeight"></i></span>
+							</div>
+							<!-- RHS -->
+								<input type="password" name="password" placeholder="Password..." class="form-control" >
+						</div>
+
+
+						<!-- Segment 3: Login Btn -->
+			   		<div class="d-flex justify-content-center mt-3 login_container">
+				 			<input class="btn login_btn" type="submit" value="Login">
+			   		</div>
+					</form>
+
+				</div>
+
+				<!--  Display Message -->
+				{% for message in messages %}
+					<p id="messages">{{message}}</p>
+				{% endfor %}
+
+				<!-- Display: Already have an account? Login -->
+				<div class="mt-4">
+					<div class="d-flex justify-content-center links">
+						Don't have an account? <a href="{% url 'signupuser' %}" class="ml-2"> Register</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 {% endblock %}
