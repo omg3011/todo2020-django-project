@@ -31,13 +31,13 @@
           <!-- Left: Nav Bar Items  -->
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a role="button" href="#" class="btn btn-primary">New</a>
+              <a role="button" href="{% url 'createtodo' %}" class="btn btn-primary">New</a>
             </li>
           </ul>
 
           <!-- Center: Nav Bar Items  -->
           <ul class="navbar-nav mx-auto">
-             <a class="navbar-brand" href="{% url 'index' %}">
+             <a class="navbar-brand" href="{% url 'home' %}">
                <img src="{% static "todo/T.png" %}" width="30" height="30" class="d-inline-block align-top" alt="ToDo's Logo">
                <span>ToDo</span>
              </a>
@@ -59,13 +59,13 @@
       <div class="container d-flex justify-content-center">
         <div class="row">
           <div class="col">
-            <a role="button" href="#" class="btn btn-primary mt-2 mb-2">Current</a>
+            <a role="button" href="{% url 'home' %}" class="btn btn-primary mt-2 mb-2">Current</a>
           </div>
           <div class="col">
-            <a role="button" href="#" class="btn btn-primary mt-2 mb-2">Completed</a>
+            <a role="button" href="{% url 'completedtodos' %}" class="btn btn-primary mt-2 mb-2">Completed</a>
           </div>
           <div class="col">
-            <a role="button" href="#" class="btn btn-primary mt-2 mb-2">Archieve</a>
+            <a role="button" href="{% url 'archievedtodos' %}" class="btn btn-primary mt-2 mb-2">Archieve</a>
           </div>
         </div>
       </div>

@@ -1,11 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm      # For Sign-up form
 from django.db import IntegrityError                        # For handling error: username already taken
 from django.contrib.auth.models import User                 # For retrieving signup authentication data which user input
-from .forms import CreateUserForm
+from .forms import CreateUserForm, TodoForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .models import Todo
+from django.utils import timezone
 
 # Home Page
 def index(request):
@@ -64,7 +66,98 @@ def logoutuser(request):
     return redirect('loginuser')
 
 
-
+# Home Page
 @login_required(login_url='login')
 def home(request):
-    return render(request, 'todo/home.html')
+    # Filter according to user
+    todos = Todo.objects.filter(user=request.user, datecompleted__isnull=True, archieve=False) # Only want objects that's no completed Yet
+    context = {'todos':todos}
+    return render(request, 'todo/home.html', context)
+
+
+# Completed Page
+@login_required(login_url='login')
+def completedtodos(request):
+    # Filter according to user
+    todos = Todo.objects.filter(user=request.user, datecompleted__isnull=False, archieve=False) # Only want objects that's no completed Yet
+    context = {'todos':todos}
+    return render(request, 'todo/home.html', context)
+
+# Archieve Page
+@login_required(login_url='login')
+def archievedtodos(request):
+    # Filter according to user
+    todos = Todo.objects.filter(user=request.user, archieve=True) # Only want objects that's no completed Yet
+    context = {'todos':todos}
+    return render(request, 'todo/home.html', context)
+
+
+# CreateToDo
+@login_required(login_url='login')
+def createtodo(request):
+    form = TodoForm()
+
+    # Display ToDo form
+    if request.method == 'GET':
+        return render(request, 'todo/createtodo.html', {'form': form})
+    # Process ToDo form
+    else:
+        # Attempt to process form s
+        try:
+            form = TodoForm(request.POST)     # Retrieve user input from the form he just input-ed
+            newtodo = form.save(commit=False)
+            newtodo.user = request.user
+            newtodo.save()
+            return redirect('home')
+        # Failed to process form due to too much characters
+        except ValueError:
+            return render(request, 'todo/createtodo.html', 'error', 'You typed too much characters.')
+
+# ViewTodo
+@login_required(login_url='login')
+def viewtodo(request, todo_pk):
+    # user = retrieve this user, check if this user got todo
+    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    # Display ViewToDoPage
+    if request.method == 'GET':
+        form = TodoForm(instance=todo)
+        return render(request, 'todo/ViewTodo.html', {'todo':todo, 'form':form})
+    # Modified ViewToDoPage
+    else:
+        try:
+            form = TodoForm(request.POST, instance=todo) #instance=todo will tell them we are reusing same user
+            form.save()
+            return redirect('home')
+        except ValueError:
+            return render(request, 'todo/viewtodo.html', {'todo':todo, 'form':form, 'error': 'You typed too much characters.'})
+
+
+# Completetodo
+@login_required(login_url='login')
+def completetodo(request, todo_pk):
+    # user = retrieve this user, check if this user got todo
+    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    if request.method == 'POST':
+        todo.datecompleted = timezone.now()
+        todo.save()
+        return redirect('home')
+
+# Completetodo
+@login_required(login_url='login')
+def deletetodo(request, todo_pk):
+    # user = retrieve this user, check if this user got todo
+    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    if request.method == 'POST':
+        todo.delete()
+        return redirect('home')
+
+
+# archievetodo
+@login_required(login_url='login')
+def archievetodo(request, todo_pk):
+    # user = retrieve this user, check if this user got todo
+    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    if request.method == 'POST':
+        todo.archieve = True
+        todo.save()
+        return redirect('home')

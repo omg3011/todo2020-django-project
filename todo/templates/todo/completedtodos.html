@@ -1,0 +1,18 @@
+{% extends 'todo/base.html' %}
+
+
+{% block content %}
+
+<ul>
+    {% for todo in todos %}
+      <li>
+        {% if todo.important %}
+          <b>{{todo.title}}</b> - {{todo.memo}}
+        {% else %}
+          <b>{{todo.title}}</b> - {{todo.memo}}
+        {% endif %}
+      </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

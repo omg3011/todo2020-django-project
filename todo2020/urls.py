@@ -30,7 +30,21 @@ urlpatterns = [
 
     # Todos
     path('', views.index, name='index'),
+
+    # Current / Completed / Archieve
     path('home/', views.home, name='home'),
+    path('completed/', views.completedtodos, name='completedtodos'),
+    path('archieved/', views.archievedtodos, name='archievedtodos'),
+
+    path('create/', views.createtodo, name='createtodo'),
+
+
+
+    # View todos
+    path('todo/<int:todo_pk>', views.viewtodo, name='viewtodo'),
+    path('todo/<int:todo_pk>/complete', views.completetodo, name='completetodo'),
+    path('todo/<int:todo_pk>/delete', views.deletetodo, name='deletetodo'),
+    path('todo/<int:todo_pk>/archieve', views.archievetodo, name='archievetodo'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
