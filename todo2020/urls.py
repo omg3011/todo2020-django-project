@@ -28,11 +28,11 @@ urlpatterns = [
     path('logout/', views.logoutuser, name='logoutuser'),
 
 
-    # Todos
+    # Intro Page
     path('', views.index, name='index'),
 
     # Current / Completed / Archieve
-    path('home/', views.home, name='home'),
+    path('home/', views.home, name='home'),                                         # Home Page
     path('completed/', views.completedtodos, name='completedtodos'),
     path('archieved/', views.archievedtodos, name='archievedtodos'),
 
@@ -42,9 +42,9 @@ urlpatterns = [
 
     # View todos
     path('todo/<int:todo_pk>', views.viewtodo, name='viewtodo'),
-    path('todo/<int:todo_pk>/complete', views.completetodo, name='completetodo'),
-    path('todo/<int:todo_pk>/delete', views.deletetodo, name='deletetodo'),
-    path('todo/<int:todo_pk>/archieve', views.archievetodo, name='archievetodo'),
+    path('todo/<int:todo_pk>/complete', views.btn_completetodo, name='completetodo'),
+    path('todo/<int:todo_pk>/delete', views.btn_deletetodo, name='deletetodo'),
+    path('todo/<int:todo_pk>/archieve', views.btn_archievetodo, name='archievetodo'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,32 @@
+{% extends 'todo/base3.html' %}
+
+
+{% block content %}
+INDEX2
+<style>
+  .start-btn{
+    width: 10%;
+  }
+</style>
+<div class="jumbotron d-flex align-items-center min-vh-100">
+  <div class="container">
+    <h1 class="d-flex justify-content-center h-100">Yet another To.Dos.</h1>
+
+    <div  class="d-flex justify-content-center h-100 text-center">
+      <p>
+      Life is a chores. There's a never ending cycles of tasks that we need to do.
+      <br>We have created <b><em>ToDo</em></b> to help you keep up with them.
+      <br>Your new organized life awaits.
+      </p>
+    <div>
+  </div>
+
+
+
+</div>
+
+<!-- Segment 5: Register Btn -->
+<div class="d-flex justify-content-center mt-3 login_container">
+  <a href="{% url 'loginuser' %}" class="btn btn-warning start-btn">Start</a>
+</div>
+{% endblock %}

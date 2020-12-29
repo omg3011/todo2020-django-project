@@ -9,9 +9,17 @@ from django.contrib import messages
 from .models import Todo
 from django.utils import timezone
 
-# Home Page
+# Intro Page
 def index(request):
-    return render(request, 'todo/index.html')
+    return render(request, 'todo/index2.html')
+
+# Home Page
+@login_required(login_url='login')
+def home(request):
+    # Filter according to user
+    todos = Todo.objects.filter(user=request.user, datecompleted__isnull=True, archieve=False) # Only want objects that's no completed Yet
+    context = {'todos':todos}
+    return render(request, 'todo/home.html', context)
 
 # Signup Page
 def signupuser(request):
@@ -60,19 +68,10 @@ def loginuser(request):
         context = {}
         return render(request, 'todo/loginuser.html', context)
 
-# Logout Page
+# Logout
 def logoutuser(request):
     logout(request)
     return redirect('loginuser')
-
-
-# Home Page
-@login_required(login_url='login')
-def home(request):
-    # Filter according to user
-    todos = Todo.objects.filter(user=request.user, datecompleted__isnull=True, archieve=False) # Only want objects that's no completed Yet
-    context = {'todos':todos}
-    return render(request, 'todo/home.html', context)
 
 
 # Completed Page
@@ -92,7 +91,7 @@ def archievedtodos(request):
     return render(request, 'todo/home.html', context)
 
 
-# CreateToDo
+# CreateToDo page
 @login_required(login_url='login')
 def createtodo(request):
     form = TodoForm()
@@ -113,7 +112,7 @@ def createtodo(request):
         except ValueError:
             return render(request, 'todo/createtodo.html', 'error', 'You typed too much characters.')
 
-# ViewTodo
+# ViewTodo page
 @login_required(login_url='login')
 def viewtodo(request, todo_pk):
     # user = retrieve this user, check if this user got todo
@@ -132,9 +131,9 @@ def viewtodo(request, todo_pk):
             return render(request, 'todo/viewtodo.html', {'todo':todo, 'form':form, 'error': 'You typed too much characters.'})
 
 
-# Completetodo
+# Button: Completetodo
 @login_required(login_url='login')
-def completetodo(request, todo_pk):
+def btn_completetodo(request, todo_pk):
     # user = retrieve this user, check if this user got todo
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'POST':
@@ -142,19 +141,18 @@ def completetodo(request, todo_pk):
         todo.save()
         return redirect('home')
 
-# Completetodo
+# Button: Deletetodo
 @login_required(login_url='login')
-def deletetodo(request, todo_pk):
+def btn_deletetodo(request, todo_pk):
     # user = retrieve this user, check if this user got todo
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'POST':
         todo.delete()
         return redirect('home')
 
-
-# archievetodo
+# Button: Archievetodo
 @login_required(login_url='login')
-def archievetodo(request, todo_pk):
+def btn_archievetodo(request, todo_pk):
     # user = retrieve this user, check if this user got todo
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'POST':
