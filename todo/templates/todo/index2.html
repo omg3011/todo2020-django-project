@@ -4,29 +4,45 @@
 {% block content %}
 INDEX2
 <style>
-  .start-btn{
-    width: 10%;
+  .my_text_color{
+    background: transparent;
+    color: #fff000;
+    font-family:sans-serif;
+    font-size: 20px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    display: flex;
+    line-height: 50px;
+    justify-content: center;
+    text-align: center;
+    text-shadow: 0 0 10px #fff000;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5)
+  }
+
+  .my_start_button{
+    display: flex;
+    justify-content: center;
+    background: transparent;
+    color: #fff000;
+    text-shadow: 0 0 10px #fff000;
+    margin-top: 100px;
+    font-size: 30px;
+  }
+
+  .my_start_button:hover{
+
   }
 </style>
-<div class="jumbotron d-flex align-items-center min-vh-100">
-  <div class="container">
-    <h1 class="d-flex justify-content-center h-100">Yet another To.Dos.</h1>
 
-    <div  class="d-flex justify-content-center h-100 text-center">
-      <p>
-      Life is a chores. There's a never ending cycles of tasks that we need to do.
-      <br>We have created <b><em>ToDo</em></b> to help you keep up with them.
-      <br>Your new organized life awaits.
-      </p>
-    <div>
-  </div>
-
-
-
+<div class="my_text_color h-100">
+  <p>
+  Life is a chores. There's a never ending cycles of tasks that we need to do.
+  <br>We have created <b><em>ToDo</em></b> to help you keep up with them.
+  <br>Your new organized life awaits.
+  </p>
 </div>
 
-<!-- Segment 5: Register Btn -->
-<div class="d-flex justify-content-center mt-3 login_container">
-  <a href="{% url 'loginuser' %}" class="btn btn-warning start-btn">Start</a>
-</div>
+
+  <a href="{% url 'loginuser' %}" class="my_start_button">- Click to start -</a>
+
 {% endblock %}
